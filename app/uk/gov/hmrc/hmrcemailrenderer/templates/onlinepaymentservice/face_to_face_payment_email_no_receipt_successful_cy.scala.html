@@ -14,10 +14,9 @@
  * limitations under the License.
  *@
 
-@import play.api.libs.json.{JsArray, JsDefined, JsLookupResult, JsObject, JsUndefined, JsValue, Json, JsBoolean}
 @import uk.gov.hmrc.hmrcemailrenderer.templates.onlinepaymentservice.AmountFormatter.formatAmountInPence
-@(params: Map[String, Any])
 
+@(params: Map[String, Any])
 
 @uk.gov.hmrc.hmrcemailrenderer.templates.helpers.html.template_main(params, "Cadarnhad bod CThEF wedi cael y taliad") {
 
@@ -46,21 +45,26 @@
         <td>@formatAmountInPence(params("amountInPence").toString)</td>
     </tr>
 
-    <tr>
-        <th>Ffi’r cerdyn</th>
-        <td>@formatAmountInPence(params("transactionFeeInPence").toString)</td>
-    </tr>
+    @{
+        if(params.contains("transactionFeeInPence")) {
+            <tr>
+                <th>Ffi’r cerdyn</th>
+                <td>{formatAmountInPence(params("transactionFeeInPence").toString)}</td>
+            </tr>
 
-    <tr>
-        <th>Cyfanswm a dalwyd</th>
-        <td>@formatAmountInPence(params("totalAmountInPence").toString)</td>
-    </tr>
+            <tr>
+                <th>Cyfanswm a dalwyd</th>
+                <td>{formatAmountInPence(params("totalAmountInPence").toString)}</td>
+            </tr>
+        }
+    }
+
     </tbody>
 </table>
 
 <p style="margin: 30px 0 30px; font-size: 19px;">Os oes gennych gyfrif treth ar-lein, bydd eich taliad yn cymryd 3 i 5 diwrnod i ymddangos yn eich cyfrif.</p>
 
-<p  style="margin: 0 0 30px; font-size: 19px;"><h2>Pam cawsoch yr e-bost hwn</h2></p>
+<h2  style="margin: 0 0 30px; font-size: 19px;">Pam cawsoch yr e-bost hwn</h2>
 
 <p style="margin: 0 0 30px; font-size: 19px;">Gwnaethoch ddewis cael cadarnhad o’r taliad drwy e-bost.</p>
 
